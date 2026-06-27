@@ -25,21 +25,21 @@ namespace AppMultiUsos.Controllers
 
         private readonly IMapper mapper;
         private readonly ICalculadoraPrestamos calculadoraPrestamos;
-        
+
 
         public PrestamoController(IMapper mapper, ICalculadoraPrestamos calculadoraPrestamos)
         {
 
             this.mapper = mapper;
             this.calculadoraPrestamos = calculadoraPrestamos;
-            
+
         }
 
 
 
 
 
-    
+
 
 
 
@@ -74,7 +74,9 @@ namespace AppMultiUsos.Controllers
 
                 var respuesta = new
                 {
-
+                    pagoMensual = resultadoPrestamo.PagoMensual,
+                    interesTotal = resultadoPrestamo.InteresTotal,
+                    pagoTotal = resultadoPrestamo.PagoTotal,
                     totalRegistros = contadorTabla,
                     pagina = paginacionDTO.Pagina,
                     recordsPorPagina = paginacionDTO.RecordsPorPagina,

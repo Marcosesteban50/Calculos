@@ -77,26 +77,42 @@ Reglas:
             //resultado
             var result = await response.Content.ReadAsStringAsync();
 
+
+           
+
+            // Debug
+            Console.WriteLine("===== STATUS =====");
+            Console.WriteLine(response.StatusCode);
+
+            Console.WriteLine("===== RESPUESTA GEMINI =====");
+            Console.WriteLine(result);
+            Console.WriteLine(apiKey);
+
             //parseamos el resultado a Json
             using var doc = JsonDocument.Parse(result);
 
+           
+                // verificando si gemini respondio sin errores
+                if (doc.RootElement.TryGetProperty("candidates", out var candidates) && candidates.GetArrayLength() > 0)
+                {
+                    return candidates[0]
+                        
+                        //mensajes de chat = content
+                        .GetProperty("content")
+                        //Contenido del mensaje = parts
+                        .GetProperty("parts")[0]
+                        //Mensaje como tal
+                        .GetProperty("text")
+                        //Convertimos estos JSOn a string
+                        .GetString()!;
+                }
+
+            
 
 
-            //Elementos de respuest ade la ia
-            var text = doc.RootElement
-                .GetProperty("candidates")[0]
-                .GetProperty("content")
-                .GetProperty("parts")[0]
-                .GetProperty("text")
-                .GetString();
 
+            return "No response generated or content was blocked.";
 
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                return "La IA no devolvió contenido.";
-            }
-
-            return text!;
         }
 
 
