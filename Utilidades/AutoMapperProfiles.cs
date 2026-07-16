@@ -3,7 +3,7 @@ using AppMultiUsos.Modelos.CalculadoraDivisas;
 using AutoMapper;
 using CalculadoraDePrestamos.DTOs;
 using CalculadoraDePrestamos.DTOs.DTOsUsuarios;
-using CalculadoraDePrestamos.Modelos.CalculadoraMatematica;
+
 using CalculadoraDePrestamos.Modelos.CalculadoraPrestamos;
 using CalculadoraDePrestamos.Modelos.CalculadoraPrestamosUsuarios;
 
@@ -18,7 +18,6 @@ namespace CalculadoraDePrestamos.Utilidades
         public AutoMapperProfiles()
         {
             SolicitudPrestamo();
-            Calculadora();
             SolicitudPrestamoUsuario();
 
         }
@@ -39,12 +38,7 @@ namespace CalculadoraDePrestamos.Utilidades
         }
 
         
-        private void Calculadora()
-        {
-            CreateMap<OperacionCalculadoraDTO,OperacionCalculadora>();
-            CreateMap<OperacionCalculadora, OperacionCalculadoraDTO>();
-
-        }
+      
 
 
     }

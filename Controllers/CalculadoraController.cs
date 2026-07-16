@@ -1,42 +1,45 @@
-﻿using AutoMapper;
-using CalculadoraDePrestamos.DTOs;
-using CalculadoraDePrestamos.Modelos.CalculadoraMatematica;
-using CalculadoraDePrestamos.Modelos.CalculadoraPrestamos;
-using CalculadoraDePrestamos.Servicios.CalculadoraMatematica;
+﻿using CalculadoraDePrestamos.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace AppMultiUsos.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CalculadoraController : Controller
+    public class CalculadoraController : ControllerBase
     {
-        private readonly iCalculadora calculadora;
-        private readonly IMapper mapper;
-
-        public CalculadoraController(iCalculadora calculadora, IMapper mapper)
-        {
-            this.calculadora = calculadora;
-            this.mapper = mapper;
-        }
 
         [HttpPost]
-        [OutputCache]
-        public IActionResult Calcular([FromBody] OperacionCalculadoraDTO operacion)
+        public IActionResult Calcular(CalculadoraDTO dto)
         {
+            decimal resultado;
 
-            if (!ModelState.IsValid)
+            switch (dto.Operacion)
             {
-                return BadRequest(ModelState);
+                case "+":
+                    resultado = dto.Numero1 + dto.Numero2;
+                    break;
+
+                case "-":
+                    resultado = dto.Numero1 - dto.Numero2;
+                    break;
+
+                case "*":
+                    resultado = dto.Numero1 * dto.Numero2;
+                    break;
+
+                case "/":
+
+                    if (dto.Numero2 == 0)
+                        return BadRequest("No se puede dividir entre cero.");
+
+                    resultado = dto.Numero1 / dto.Numero2;
+                    break;
+
+                default:
+                    return BadRequest("Operación inválida.");
             }
-            var resultadoOperacion = mapper.Map<OperacionCalculadora>(operacion);
 
-            var resultado = calculadora.Operar(resultadoOperacion.Numero1, resultadoOperacion.Operacion!);
-            return Ok(new { total = resultado });
-
-
+            return Ok(resultado);
         }
-
     }
 }

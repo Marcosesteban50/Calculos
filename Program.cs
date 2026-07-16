@@ -1,7 +1,7 @@
 using AppMultiUsos.Servicios;
 using AppMultiUsos.Servicios.CalculadoraDivisas;
 using CalculadoraDePrestamos.Data;
-using CalculadoraDePrestamos.Servicios.CalculadoraMatematica;
+
 using CalculadoraDePrestamos.Servicios.CalculadoraPrestamos;
 using CalculadoraDePrestamos.Servicios.CalculadoraPrestamosUsuarios;
 using CalculosApp.Servicios.IA;
@@ -65,7 +65,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(o =>
 builder.Services.AddTransient<ICalculadoraPrestamos, CalculadoraPrestamos>();
 builder.Services.AddTransient<iCalculadoraPrestamosUsuario, CalculadoraPrestamosUsuario>();
 builder.Services.AddTransient<iCalculadoraDivisas, CalculadoraDivisas>();
-builder.Services.AddTransient<iCalculadora, Calculadora>();
+
 builder.Services.AddHttpClient<GeminiService>();
 
 
